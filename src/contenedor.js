@@ -9,10 +9,10 @@ class Contenedor {
     let arreglo = JSON.parse(txt);
     arreglo.push(Object.assign(objeto, { id: arreglo.length + 1 }));
     await fs.promises.writeFile(
-      "./productos.txt",
+      this.path,
       JSON.stringify(arreglo, null, "\t")
     );
-    return `Producto ${objeto.nombre} agregado con id ${objeto.id}`;
+    return `Objeto agregado`;
   }
   async getById(id) {
     let txt = await fs.promises.readFile(this.path, "utf-8");
@@ -54,7 +54,7 @@ class Contenedor {
     if (index === id - 1) {
       arreglo.splice(index, 1);
       await fs.promises.writeFile(
-        "./productos.txt",
+        this.path,
         JSON.stringify(arreglo, null, "\t")
       );
       return true;
@@ -62,7 +62,7 @@ class Contenedor {
     return false;
   }
   async deleteAll() {
-    await fs.promises.writeFile("./productos.txt", "[]");
+    await fs.promises.writeFile(this.path, "[]");
     return "Productos eliminados.";
   }
 }
